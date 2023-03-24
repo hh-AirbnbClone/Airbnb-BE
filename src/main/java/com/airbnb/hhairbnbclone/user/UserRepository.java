@@ -1,6 +1,11 @@
 package com.airbnb.hhairbnbclone.user;
 
-import org.hibernate.metamodel.model.convert.spi.JpaAttributeConverter;
+import com.airbnb.hhairbnbclone.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaAttributeConverter {
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByKakaoId(Long kakaoId);
+    boolean existsByKakaoId(Long kakaoId);
 }
