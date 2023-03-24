@@ -59,7 +59,7 @@ public class UserService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "658cf70d3e0e9690b7343f3d1f06ff3a");
-        body.add("redirect_uri", "http://localhost:8080/auth/login");
+        body.add("redirect_uri", "http://3.34.181.44/auth/login");
         body.add("code", code);
 
         // HTTP 요청 보내기
