@@ -13,7 +13,7 @@ public class MainRoomsResponseDto {
     private final List<String> imageList;
 //    private Date checkInDate;
 //    private Date checkOutDate;
-    private final Long price;
+    private final int price;
     private final int maxGuest;
     public MainRoomsResponseDto(Room room) {
         this.id = room.getId();

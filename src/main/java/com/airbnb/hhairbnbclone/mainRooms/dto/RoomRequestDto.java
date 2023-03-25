@@ -11,7 +11,7 @@ import java.util.List;
 public class RoomRequestDto {
     private String title;
     private String description;
-    private Long price;
+    private int price;
     private String address;
     private List<String> imageList;
     private int maxGuest;
