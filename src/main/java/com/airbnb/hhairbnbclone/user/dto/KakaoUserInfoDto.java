@@ -19,4 +19,4 @@ public class KakaoUserInfoDto {
     }
 }
 
-//https://kauth.kakao.com/oauth/authorize?client_id=658cf70d3e0e9690b7343f3d1f06ff3a&redirect_uri=http://localhost:8080/auth/login&response_type=code
+//https://kauth.kakao.com/oauth/authorize?client_id=658cf70d3e0e9690b7343f3d1f06ff3a&redirect_uri=http://3.34.181.44/auth/login&response_type=code

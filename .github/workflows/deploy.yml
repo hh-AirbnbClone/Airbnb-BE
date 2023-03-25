@@ -10,8 +10,8 @@ on:
 env:
   AWS_REGION: ap-northeast-2
   S3_BUCKET_NAME: airdnd-s3-bucket
-  CODE_DEPLOY_APPLICATION_NAME: airdnd-codedeploy-app
-  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: airdnd-deployment-group
+  CODE_DEPLOY_APPLICATION_NAME: airdnd-application
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: airdnd-codedeploy-group
 
 permissions:
   contents: read
@@ -27,7 +27,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-#    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 #    - run: touch ./src/main/resources/application.properties
 #    - run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.properties
 #    - run: cat ./src/main/resources/application.properties

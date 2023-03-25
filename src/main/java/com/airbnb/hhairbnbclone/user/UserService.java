@@ -59,7 +59,7 @@ public class UserService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "658cf70d3e0e9690b7343f3d1f06ff3a");
-        body.add("redirect_uri", "http://3.34.181.44/auth/login");
+        body.add("redirect_uri", "http://localhost:3000/auth/login");
         body.add("code", code);
 
         // HTTP 요청 보내기
@@ -103,10 +103,12 @@ public class UserService {
         Long id = jsonNode.get("id").asLong();
         String nickname = jsonNode.get("properties")
                 .get("nickname").asText();
-        String email = jsonNode.get("kakao_account")
-                .get("email").asText();
         String profile = jsonNode.get("properties")
                 .get("profile_image").asText();
+        String email = jsonNode.get("kakao_account")
+                .get("email").asText();
+
+
         log.info("카카오 사용자 정보: " + id + ", " + nickname + ", " + email);
         return new KakaoUserInfoDto(id, nickname, email, profile);
     }
