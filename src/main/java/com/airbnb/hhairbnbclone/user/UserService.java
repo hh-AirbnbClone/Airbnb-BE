@@ -32,11 +32,8 @@ public class UserService {
 
     public Map<String, String> kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
-        System.out.println("accessToken");
         String accessToken = getToken(code);
-        System.out.println("accessToken " + accessToken);
 
-        System.out.println("사용자 정보");
         // 2. 토큰으로 카카오 API 호출 : "액세스 토큰"으로 "카카오 사용자 정보" 가져오기
         KakaoUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
 
@@ -48,7 +45,7 @@ public class UserService {
         result.put("kakaoId", String.valueOf(kakaoUserInfo.getId()));
         result.put("nickname", kakaoUserInfo.getNickname());
         result.put("profile", kakaoUserInfo.getProfile());
-        System.out.println("result: " + result.toString());
+
         return result;
     }
 
@@ -61,7 +58,7 @@ public class UserService {
         // HTTP Body 생성
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
-        body.add("client_id", "dbe98a0c75e22d79ab3b0a4870fc39ad");
+        body.add("client_id", "658cf70d3e0e9690b7343f3d1f06ff3a");
         body.add("redirect_uri", "http://localhost:3000/auth/login");
         body.add("code", code);
 
@@ -106,10 +103,12 @@ public class UserService {
         Long id = jsonNode.get("id").asLong();
         String nickname = jsonNode.get("properties")
                 .get("nickname").asText();
-        String email = jsonNode.get("kakao_account")
-                .get("email").asText();
         String profile = jsonNode.get("properties")
                 .get("profile_image").asText();
+        String email = jsonNode.get("kakao_account")
+                .get("email").asText();
+
+
         log.info("카카오 사용자 정보: " + id + ", " + nickname + ", " + email);
         return new KakaoUserInfoDto(id, nickname, email, profile);
     }
