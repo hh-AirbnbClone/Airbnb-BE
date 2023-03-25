@@ -27,11 +27,13 @@ public class UserController {
     @GetMapping("/login")
     public ResponseEntity kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
         // code: 카카오 서버로부터 받은 인가 코드
+        System.out.println("=====코드===== " + code);
         Map<String, String> kakaoUser = userService.kakaoLogin(code, response);
         String createToken =  jwtUtil.createToken(kakaoUser.get("kakaoId"), kakaoUser.get("nickname"));
 
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, createToken);
-
+//
+        System.out.println("이상하다");
         return ResponseMessage.SuccessResponse("로그인 성공!", new LoginResponseDto(kakaoUser.get("profile")));
 
 //        // Cookie 생성 및 직접 브라우저에 Set
