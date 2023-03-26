@@ -1,17 +1,15 @@
-package com.airbnb.hhairbnbclone.roomDetail;
+package com.airbnb.hhairbnbclone.room;
 
-import com.airbnb.hhairbnbclone.entity.Comment;
-import com.airbnb.hhairbnbclone.entity.Reservation;
+import com.airbnb.hhairbnbclone.entity.Review;
 import com.airbnb.hhairbnbclone.entity.Room;
-import com.airbnb.hhairbnbclone.entity.User;
 import com.airbnb.hhairbnbclone.exception.CustomErrorCode;
 import com.airbnb.hhairbnbclone.exception.CustomException;
-import com.airbnb.hhairbnbclone.mainRooms.dto.MainRoomsResponseDto;
-import com.airbnb.hhairbnbclone.reservation.ReservationRepository;
-import com.airbnb.hhairbnbclone.roomDetail.dto.CommentRequestDto;
-import com.airbnb.hhairbnbclone.roomDetail.dto.CommentResponseDto;
-import com.airbnb.hhairbnbclone.roomDetail.dto.ReservateRequestDto;
-import com.airbnb.hhairbnbclone.roomDetail.dto.RoomDetailListResponseDto;
+import com.airbnb.hhairbnbclone.repository.ReviewRepository;
+import com.airbnb.hhairbnbclone.repository.ReservationRepository;
+import com.airbnb.hhairbnbclone.repository.RoomRepository;
+import com.airbnb.hhairbnbclone.room.dto.MainRoomsResponseDto;
+import com.airbnb.hhairbnbclone.room.dto.RoomDetailListResponseDto;
+import com.airbnb.hhairbnbclone.room.dto.RoomRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,32 +18,71 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RoomdetailService {
-    private final RoomDetailRepository roomDetailRepository;
-    private final CommentRepository commentRepository;
+public class RoomService {
+    private final RoomRepository roomRepository;
+    private final ReviewRepository reviewRepository;
     private final ReservationRepository reservationRepository;
+
+
+    @Transactional
+    public void createRoom(RoomRequestDto requestDto) {
+        roomRepository.saveAndFlush(new Room(requestDto));
+    }
+
+    @Transactional
+    public List<MainRoomsResponseDto> getMainRooms(
+            String address,
+            Date checkInDate,
+            Date checkOutDate,
+            Integer guestNum
+    ){
+        /* XXX; 모든 데이터 받아온 후 검색 결과에 따라 if문으로 필터링을 진행해 주었는데
+            서비스가 커지고, 데이터가 많아지면 성능 저하가 이뤄지기 쉽다
+            repository에서 처리하자니 받아오는 검색값이 null일 수도 있어서 동적 쿼리를 작성해줘야함
+            QueryDSL, Specifications API, Criteria API 중 하나 사용해서 구현해보기
+         * */
+        // TODO : 예약 구현 완료되면 체크인, 체크아웃시간 구현하기
+        // 모든 데이터 받아온 후
+        List<Room> roomList = roomRepository.findAll();
+        List<MainRoomsResponseDto> roomsResponseDtoList = new ArrayList<>();
+
+        // 검색 결과에 따라 필터링
+        for(Room room: roomList){
+            if (address != null && !room.getAddress().contains(address)) {
+                continue;
+            }
+//            if (checkInDate != null && room.getCheckInDate().after(checkInDate)) {
+//                continue;
+//            }
+//
+//            if (checkOutDate != null && room.getCheckOutDate().before(checkOutDate)) {
+//                continue;
+//            }
+
+            if (guestNum != null && room.getMaxGuest() < guestNum) {
+                continue;
+            }
+            roomsResponseDtoList.add(new MainRoomsResponseDto(room));
+        }
+        return roomsResponseDtoList;
+    }
+
 
     @Transactional(readOnly = true)
     public RoomDetailListResponseDto getDetailRoom(Long roomId){
-        Room room = getRoomId(roomId);
-        List<Comment> commentList = commentRepository.findByRoom(room);
+        Room room = getRoom(roomId);
+        List<Review> commentList = reviewRepository.findByRoom(room);
         if(commentList.size()==0){
             new CustomException(CustomErrorCode.COMMENT_NOT_FOUND);
         }
         return new RoomDetailListResponseDto(room, commentList);
     }
 
-    @Transactional(readOnly = true)
-    public CommentResponseDto createComment(Long roomId, CommentRequestDto commentRequestDto, User user){
-        Room room = getRoomId(roomId);
-        Comment comment = new Comment(commentRequestDto, user, room); //username이랑 comment 있음
-        commentRepository.saveAndFlush(comment);
-        return new CommentResponseDto(comment);
-    }
+
 
 
 //    @Transactional
@@ -104,8 +141,8 @@ public class RoomdetailService {
 
 
     // 원하는 숙소 조회해주는 메서드
-    public Room getRoomId(Long roomId){
-        return roomDetailRepository.findById(roomId).orElseThrow(
+    public Room getRoom(Long roomId){
+        return roomRepository.findById(roomId).orElseThrow(
                 () -> new CustomException(CustomErrorCode.ROOM_NOT_FOUND)
         );
     }

@@ -1,4 +1,4 @@
-package com.airbnb.hhairbnbclone.mainRooms.dto;
+package com.airbnb.hhairbnbclone.room.dto;
 
 import com.airbnb.hhairbnbclone.entity.Room;
 import lombok.Getter;
