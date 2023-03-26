@@ -2,7 +2,7 @@ package com.airbnb.hhairbnbclone.user;
 
 import com.airbnb.hhairbnbclone.entity.User;
 import com.airbnb.hhairbnbclone.entity.UserRoleEnum;
-import com.airbnb.hhairbnbclone.jwt.JwtUtil;
+import com.airbnb.hhairbnbclone.repository.UserRepository;
 import com.airbnb.hhairbnbclone.user.dto.KakaoUserInfoDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -13,8 +13,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -22,7 +22,6 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -30,6 +29,7 @@ import java.util.UUID;
 public class UserService {
     private final UserRepository userRepository;
 
+    @Transactional
     public Map<String, String> kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
         String accessToken = getToken(code);
@@ -48,8 +48,6 @@ public class UserService {
 
         return result;
     }
-
-    // 1. "인가 코드"로 "액세스 토큰" 요청
     private String getToken(String code) throws JsonProcessingException {
         // HTTP Header 생성
         HttpHeaders headers = new HttpHeaders();

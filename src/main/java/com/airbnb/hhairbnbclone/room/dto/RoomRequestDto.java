@@ -1,5 +1,4 @@
-package com.airbnb.hhairbnbclone.mainRooms.dto;
-
+package com.airbnb.hhairbnbclone.room.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +10,7 @@ import java.util.List;
 public class RoomRequestDto {
     private String title;
     private String description;
-    private Long price;
+    private int price;
     private String address;
     private List<String> imageList;
     private int maxGuest;
