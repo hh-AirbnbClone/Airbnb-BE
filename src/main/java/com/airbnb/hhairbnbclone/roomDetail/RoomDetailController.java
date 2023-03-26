@@ -3,7 +3,9 @@ package com.airbnb.hhairbnbclone.roomDetail;
 import com.airbnb.hhairbnbclone.exception.ResponseMessage;
 import com.airbnb.hhairbnbclone.roomDetail.dto.CommentRequestDto;
 import com.airbnb.hhairbnbclone.roomDetail.dto.CommentResponseDto;
+import com.airbnb.hhairbnbclone.roomDetail.dto.ReservateRequestDto;
 import com.airbnb.hhairbnbclone.roomDetail.dto.RoomDetailListResponseDto;
+import com.airbnb.hhairbnbclone.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,8 +32,13 @@ public class RoomDetailController {
     }
 
 
-//    @PostMapping("/review/id")
-//    public CommentResponseDto createComment(@PathVariable Long roomId, @RequestBody CommentRequestDto commentRequestDto, @AuthenticationPrincipal UserDetails userDetails){
-//        return roomdetailService.createComment(roomId, userDetails.getUser());
-//    }
+    @PostMapping("/review/{id}")
+    public ResponseEntity createComment(@PathVariable Long Id, @RequestBody CommentRequestDto commentRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return ResponseMessage.SuccessResponse("리뷰 작성 성공", roomdetailService.createComment(Id, commentRequestDto, userDetails.getUser()));
+    }
+
+    @PostMapping("/reservation/{id}")
+    public ResponseEntity reservateRoom(@PathVariable Long Id, @RequestBody ReservateRequestDto reservateRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return ResponseMessage.SuccessResponse("숙소 예약 성공", roomdetailService.reservateRoom(Id,reservateRequestDto, userDetails.getUser()));
+    }
 }

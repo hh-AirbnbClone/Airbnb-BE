@@ -1,5 +1,6 @@
 package com.airbnb.hhairbnbclone.mainRooms;
 
+import com.airbnb.hhairbnbclone.entity.Reservation;
 import com.airbnb.hhairbnbclone.entity.Room;
 import com.airbnb.hhairbnbclone.mainRooms.dto.MainRoomsResponseDto;
 //import com.airbnb.hhairbnbclone.mainRooms.dto.RoomRequestDto;
@@ -62,4 +63,5 @@ public class MainRoomsService {
         }
         return roomsResponseDtoList;
     }
+
 }

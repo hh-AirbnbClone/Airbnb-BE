@@ -10,13 +10,13 @@ import java.util.List;
 
 @Getter
 public class CommentResponseDto {
-    private String username;
+    private User user;
     private String comment;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
-    public CommentResponseDto(Comment comment, User user) {
-        this.username = user.getNickname();
+    public CommentResponseDto(Comment comment) {
+        this.user= comment.getUser();
         this.comment = comment.getComment();
         this.createdAt = comment.getCreatedAt();
         this.modifiedAt = comment.getModifiedAt();
