@@ -1,5 +1,6 @@
 package com.airbnb.hhairbnbclone.entity;
 
+import com.airbnb.hhairbnbclone.roomDetail.dto.CommentRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,9 +19,17 @@ public class Comment extends Timestamped{
 
     @JoinColumn(name = "USER_ID", nullable = false)
     @ManyToOne
-    User user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "ROOM_ID", nullable = false)
-    Room room;
+    private Room room;
+
+
+    public Comment(CommentRequestDto commentRequestDto, User user, Room room) {
+        this.comment = commentRequestDto.getComment();
+        this.user = user;
+        this.room = room;
+
+    }
 }
