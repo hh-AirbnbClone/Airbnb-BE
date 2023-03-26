@@ -21,7 +21,7 @@ public class ReviewService {
     private final RoomService roomService;
     @Transactional(readOnly = true)
     public ReviewResponseDto createReview(Long roomId, ReviewRequestDto reviewRequestDto, User user){
-        Room room = roomService.getRoomId(roomId);
+        Room room = roomService.getRoom(roomId);
         Review review = new Review(reviewRequestDto, user, room); //username이랑 comment 있음
         reviewRepository.saveAndFlush(review);
         return new ReviewResponseDto(review);

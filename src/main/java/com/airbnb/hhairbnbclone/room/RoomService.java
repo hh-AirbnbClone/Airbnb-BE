@@ -74,7 +74,7 @@ public class RoomService {
 
     @Transactional(readOnly = true)
     public RoomDetailListResponseDto getDetailRoom(Long roomId){
-        Room room = getRoomId(roomId);
+        Room room = getRoom(roomId);
         List<Review> commentList = reviewRepository.findByRoom(room);
         if(commentList.size()==0){
             new CustomException(CustomErrorCode.COMMENT_NOT_FOUND);
@@ -141,7 +141,7 @@ public class RoomService {
 
 
     // 원하는 숙소 조회해주는 메서드
-    public Room getRoomId(Long roomId){
+    public Room getRoom(Long roomId){
         return roomRepository.findById(roomId).orElseThrow(
                 () -> new CustomException(CustomErrorCode.ROOM_NOT_FOUND)
         );
