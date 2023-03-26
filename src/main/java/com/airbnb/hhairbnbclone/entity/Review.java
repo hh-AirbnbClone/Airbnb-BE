@@ -1,6 +1,6 @@
 package com.airbnb.hhairbnbclone.entity;
 
-import com.airbnb.hhairbnbclone.roomDetail.dto.CommentRequestDto;
+import com.airbnb.hhairbnbclone.review.dto.ReviewRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,13 +9,13 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Comment extends Timestamped{
+public class Review extends Timestamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    private String comment;
+    private String review;
 
     @JoinColumn(name = "USER_ID", nullable = false)
     @ManyToOne
@@ -26,8 +26,8 @@ public class Comment extends Timestamped{
     private Room room;
 
 
-    public Comment(CommentRequestDto commentRequestDto, User user, Room room) {
-        this.comment = commentRequestDto.getComment();
+    public Review(ReviewRequestDto reviewRequestDto, User user, Room room) {
+        this.review = reviewRequestDto.getReview();
         this.user = user;
         this.room = room;
 

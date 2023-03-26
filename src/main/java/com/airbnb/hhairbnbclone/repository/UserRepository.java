@@ -1,4 +1,4 @@
-package com.airbnb.hhairbnbclone.user;
+package com.airbnb.hhairbnbclone.repository;
 
 import com.airbnb.hhairbnbclone.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

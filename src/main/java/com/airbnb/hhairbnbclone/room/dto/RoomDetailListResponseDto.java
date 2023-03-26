@@ -1,12 +1,10 @@
-package com.airbnb.hhairbnbclone.roomDetail.dto;
+package com.airbnb.hhairbnbclone.room.dto;
 
-import com.airbnb.hhairbnbclone.entity.Comment;
-import com.airbnb.hhairbnbclone.entity.Reservation;
+import com.airbnb.hhairbnbclone.entity.Review;
 import com.airbnb.hhairbnbclone.entity.Room;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -18,9 +16,9 @@ public class RoomDetailListResponseDto {
     private int price;
     private String address;
     private List<String> imageList;
-    List<Comment> commentList;
+    List<Review> commentList;
 
-    public RoomDetailListResponseDto(Room room, List<Comment> commentResponseDtoList) {
+    public RoomDetailListResponseDto(Room room, List<Review> commentResponseDtoList) {
         this.RoomId = room.getId();
         this.title = room.getTitle();
         this.description = room.getDescription();

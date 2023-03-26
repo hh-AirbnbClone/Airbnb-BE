@@ -1,7 +1,7 @@
 package com.airbnb.hhairbnbclone.entity;
 
-//import com.airbnb.hhairbnbclone.mainRooms.dto.RoomRequestDto;
-import com.airbnb.hhairbnbclone.mainRooms.dto.RoomRequestDto;
+
+import com.airbnb.hhairbnbclone.room.dto.RoomRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

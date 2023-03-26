@@ -1,7 +1,7 @@
 package com.airbnb.hhairbnbclone.security;
 
 import com.airbnb.hhairbnbclone.entity.User;
-import com.airbnb.hhairbnbclone.user.UserRepository;
+import com.airbnb.hhairbnbclone.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
