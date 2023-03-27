@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class RoomDetailController {
 
-    private final RoomService roomService;
+    private final DetailRoomService detailRoomService;
 
 //    @GetMapping("/{Id}")
 //    public RoomDetailListResponseDto getDetailRoom(@PathVariable Long Id)throws Exception{
@@ -22,7 +22,7 @@ public class RoomDetailController {
 
     @GetMapping("/{Id}")
     public ResponseEntity getDetailRoom(@PathVariable Long Id)throws Exception{
-        return ResponseMessage.SuccessResponse("숙소 상세조회 성공", roomService.getDetailRoom(Id));
+        return ResponseMessage.SuccessResponse("숙소 상세조회 성공", detailRoomService.getDetailRoom(Id));
     }
 
 
