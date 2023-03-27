@@ -19,11 +19,12 @@ public class DetailRoomService {
     private final ReviewRepository reviewRepository;
     private final RoomRepository roomRepository;
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true)   // 숙소 상세정보 Page
     public RoomDetailListResponseDto getDetailRoom(Long roomId){
         Room room = getRoom(roomId);
         List<Review> reviewList = reviewRepository.findByRoom(room);
-        return new RoomDetailListResponseDto(room, reviewList);
+        int reviewCount = reviewList.size();
+        return new RoomDetailListResponseDto(room, reviewList, reviewCount);
     }
 
     // 원하는 숙소 조회해주는 메서드
