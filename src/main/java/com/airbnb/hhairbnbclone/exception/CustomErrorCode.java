@@ -18,8 +18,9 @@ public enum CustomErrorCode {
     NOT_PROPER_URLFORM(BAD_REQUEST, "입력한 URL 형식이 맞지 않습니다."),
     NOT_AUTHOR(BAD_REQUEST, "작성자만 삭제/수정할 수 있습니다."),
     WRONG_ADMIN_TOKEN(BAD_REQUEST, "관리자 암호가 틀려 등록이 불가능합니다."),
-    CAN_NOT_RESERVATE_ROOM(BAD_REQUEST, "예약하실 수 없는 날짜입니다."),
+    DUPLICATE_RESERVATION_DATE(BAD_REQUEST, "예약하실 수 없는 날짜입니다."),
     OVER_GUEST_COUNT(BAD_REQUEST, "수용 가능 인원보다 많습니다."),
+    INVALID_RESERVATION_DATE(BAD_REQUEST, "체크아웃 날짜는 체크인 날짜 이후로 입력해 주세요."),
 
     /* 404 NOT_FOUND : Resource 를 찾을 수 없음 */
     USER_NOT_FOUND(NOT_FOUND, "등록된 사용자가 없습니다"),
