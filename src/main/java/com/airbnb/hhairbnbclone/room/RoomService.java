@@ -76,9 +76,9 @@ public class RoomService {
     public RoomDetailListResponseDto getDetailRoom(Long roomId){
         Room room = getRoom(roomId);
         List<Review> reviewList = reviewRepository.findByRoom(room);
-        if(reviewList.size()==0){
-            throw new CustomException(CustomErrorCode.COMMENT_NOT_FOUND);
-        }
+//        if(reviewList.size()==0){
+//            throw new CustomException(CustomErrorCode.COMMENT_NOT_FOUND);
+//        }
         return new RoomDetailListResponseDto(room, reviewList);
     }
 
