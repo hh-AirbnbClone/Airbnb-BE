@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final RoomService roomService;
-    @Transactional(readOnly = true)
+    @Transactional()
     public ReviewResponseDto createReview(Long roomId, ReviewRequestDto reviewRequestDto, User user){
         Room room = roomService.getRoom(roomId);
         Review review = new Review(reviewRequestDto, user, room); //username이랑 comment 있음
