@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class ReviewController {
     private final ReviewService reviewService;
     @PostMapping("/review/{id}")
-    public ResponseEntity createReview(@PathVariable Long Id, @RequestBody ReviewRequestDto reviewRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return ResponseMessage.SuccessResponse("리뷰 작성 성공", reviewService.createReview(Id, reviewRequestDto, userDetails.getUser()));
+    public ResponseEntity createReview(@PathVariable Long id, @RequestBody ReviewRequestDto reviewRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return ResponseMessage.SuccessResponse("리뷰 작성 성공", reviewService.createReview(id, reviewRequestDto, userDetails.getUser()));
     }
 }
