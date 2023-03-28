@@ -2,6 +2,7 @@ package com.airbnb.hhairbnbclone.reservation.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -9,9 +10,11 @@ import java.time.LocalDate;
 public class ReservationRequestDto {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    @DateTimeFormat(pattern="yyyyMMdd")
     private LocalDate checkInDate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    @DateTimeFormat(pattern="yyyyMMdd")
     private LocalDate checkOutDate;
     private int guestNum;
 }
