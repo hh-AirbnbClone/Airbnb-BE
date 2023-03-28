@@ -11,12 +11,11 @@ public class ReviewResponseDto {
     private User user;
     private String review;
     private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
 
-    public ReviewResponseDto(Review review) {
+
+    public ReviewResponseDto(Review review) {    //create Review
         this.user= review.getUser();
         this.review = review.getReview();
         this.createdAt = review.getCreatedAt();
-        this.modifiedAt = review.getModifiedAt();
     }
 }
