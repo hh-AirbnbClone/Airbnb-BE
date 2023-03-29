@@ -16,7 +16,10 @@ public class MainRoomsResponseDto {
     private final LocalDate checkOutDate;
     private final int price;
     private final int maxGuest;
-    public MainRoomsResponseDto(Room room, LocalDate checkInDate, LocalDate checkOutDate) {
+    // Done : 즐겨찾기 되있는지 확인하고 true or false 반환
+    private final boolean bookmark;
+
+    public MainRoomsResponseDto(Room room, LocalDate checkInDate, LocalDate checkOutDate, boolean bookmark) {
         this.id = room.getId();
         this.address = room.getAddress();
         this.imageList = room.getImageList();
@@ -24,5 +27,6 @@ public class MainRoomsResponseDto {
         this.checkOutDate = checkOutDate;
         this.price = room.getPrice();
         this.maxGuest = room.getMaxGuest();
+        this.bookmark = bookmark;
     }
 }

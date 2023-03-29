@@ -31,14 +31,21 @@ public class MainRoomsController {
     }
 
 
+    // ResponseEntity로 수정
     @GetMapping("/rooms")
     public List<MainRoomsResponseDto> getRooms(
             @RequestParam(required = false) String address,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkInDate,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkOutDate,
             @RequestParam(required = false) Integer guestNum
+            ,@AuthenticationPrincipal UserDetailsImpl userDetails
     ){
-        return roomService.getMainRooms(address, checkInDate, checkOutDate, guestNum);
+        if(userDetails == null){
+            return roomService.getMainRooms(address, checkInDate, checkOutDate, guestNum, null);
+        } else{
+            return roomService.getMainRooms(address, checkInDate, checkOutDate, guestNum, userDetails.getUser());
+        }
+
     }
 
     @PostMapping("/rooms/bookmark/{roomId}")
