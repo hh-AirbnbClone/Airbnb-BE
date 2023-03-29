@@ -3,11 +3,9 @@ package com.airbnb.hhairbnbclone.entity;
 import com.airbnb.hhairbnbclone.review.dto.ReviewRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
-@EntityListeners(AuditingEntityListener.class)
+
 @Getter
 @Entity
 @NoArgsConstructor
@@ -18,12 +16,12 @@ public class Review extends Timestamped{
     @Column
     private String review;
 
-    @JoinColumn(name = "USER_ID", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     @ManyToOne
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "ROOM_ID", nullable = false)
+    @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
 

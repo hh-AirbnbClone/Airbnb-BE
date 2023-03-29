@@ -29,14 +29,15 @@ public class BookmarkService {
         // 이전에 bookmark 안했으면 추가, 했으면 삭제
         if (!checkBookmark(roomId, user)){
             saveBookmark(roomId, user);
-            return "북마크 저장 성공";
+            return "북마크 성공";
         } else {
             deleteBookmark(roomId, user);
-            return "북마크 삭제 성공";
+            return "북마크 취소";
         }
     }
 
-    // TODO: optional 안쓰는게 좋음 exist -> 근데 delete에서 써야함
+    //optional 안쓰는게 좋음 exist -> 근데 delete에서 써야함
+    @Transactional
     public boolean checkBookmark(Long roomId, User user) {
         return bookmarkRepository.existsByRoomIdAndUser(roomId, user);
     }
