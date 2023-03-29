@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 public class ReviewResponseDto {
     private User user;
     private String review;
-    private LocalDateTime createdAt;
+    private String createdAt;
 
 
     public ReviewResponseDto(Review review) {    //create Review
         this.user= review.getUser();
         this.review = review.getReview();
-        this.createdAt = review.getCreatedAt();
+        this.createdAt = createdAt.toString().substring(0,10);
     }
 }
