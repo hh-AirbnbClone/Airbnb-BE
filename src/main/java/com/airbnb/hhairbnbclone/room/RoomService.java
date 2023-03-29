@@ -1,5 +1,6 @@
 package com.airbnb.hhairbnbclone.room;
 
+import com.airbnb.hhairbnbclone.bookmark.BookmarkService;
 import com.airbnb.hhairbnbclone.entity.Bookmark;
 import com.airbnb.hhairbnbclone.entity.Review;
 import com.airbnb.hhairbnbclone.entity.Room;
@@ -11,6 +12,7 @@ import com.airbnb.hhairbnbclone.repository.ReviewRepository;
 import com.airbnb.hhairbnbclone.repository.ReservationRepository;
 import com.airbnb.hhairbnbclone.repository.RoomRepository;
 import com.airbnb.hhairbnbclone.reservation.ReservationService;
+import com.airbnb.hhairbnbclone.review.ReviewService;
 import com.airbnb.hhairbnbclone.review.dto.ReviewResponseDto;
 import com.airbnb.hhairbnbclone.room.dto.MainRoomsResponseDto;
 import com.airbnb.hhairbnbclone.room.dto.RoomDetailListResponseDto;
@@ -34,8 +36,8 @@ import java.util.Optional;
 public class RoomService {
     private final RoomRepository roomRepository;
     private final ReservationService reservationService;
-    private final ReviewRepository reviewRepository;
-
+    private final BookmarkService bookmarkService;
+    private final ReviewService reviewService;
 
 
     @Transactional
@@ -48,9 +50,15 @@ public class RoomService {
             String address,
             LocalDate checkInDate,
             LocalDate checkOutDate,
-            Integer guestNum
+            Integer guestNum,
+            User user
     ){
         List<MainRoomsResponseDto> roomsResponseDtoList = new ArrayList<>();
+
+        // TODO : address 빈 문자열로, guestNum 0으로 해서 계산해보기
+        //  제일 처음 가능한 일주일을 먼저 찾고 getNotReservableRoom함수에 checkInDate, checkOutDate 넣기
+
+        // xxx : 일단 db 두번 감 ㅠㅠ refactoring 필요
 
         // param 값이 들어 왔을 경우
         // 검색 조회 - 해당 파람값에 맞춰서 출력
@@ -64,7 +72,9 @@ public class RoomService {
                 if (room.getMaxGuest() < guestNum) {
                     continue;
                 }
-                roomsResponseDtoList.add(new MainRoomsResponseDto(room, checkInDate, checkOutDate));
+                // xxx : existsByRoomIdAndUser이 매서드에서 user == null이어도 에러가 안터지네 ?? nullpointerexception이 터져야 정상 아닌가 ?
+                boolean bookmark = bookmarkService.checkBookmark(room.getId(), user);
+                roomsResponseDtoList.add(new MainRoomsResponseDto(room, checkInDate, checkOutDate, bookmark));
             }
         } else{
             // param 값이 들어 오지 않았을 경우
@@ -73,7 +83,8 @@ public class RoomService {
             for(Room room: roomList){
                 LocalDate earliestDate = reservationService.getEarliestAvailableDate(room);
                 LocalDate oneWeekLater = earliestDate.plusWeeks(1);
-                roomsResponseDtoList.add(new MainRoomsResponseDto(room, earliestDate, oneWeekLater));
+                boolean bookmark = bookmarkService.checkBookmark(room.getId(), user);
+                roomsResponseDtoList.add(new MainRoomsResponseDto(room, earliestDate, oneWeekLater, bookmark));
             }
         }
         return roomsResponseDtoList;
@@ -92,13 +103,8 @@ public class RoomService {
 
     public RoomDetailListResponseDto getDetailRoom(Long roomId){ // 숙소 상세정보 Page
         Room room = getRoom(roomId);
-        List<Review> reviewList = reviewRepository.findByRoom(room);
-        List<ReviewResponseDto> reviewResponseDtoList = new ArrayList<>();
-
-        for (Review review : reviewList) {      //reviewList의 배열 수 만큼 반복!           Review가
-            reviewResponseDtoList.add(new ReviewResponseDto(review));
-        }
-        return new RoomDetailListResponseDto(room, reviewResponseDtoList, reviewList.size());
+        List<ReviewResponseDto> reviewResponseDtoList = reviewService.getReviewResponseDtoList(room);
+        return new RoomDetailListResponseDto(room, reviewResponseDtoList, reviewResponseDtoList.size());
     }
 
 

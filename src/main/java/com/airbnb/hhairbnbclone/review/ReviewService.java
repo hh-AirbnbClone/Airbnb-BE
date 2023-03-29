@@ -13,6 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Slf4j
 @Service
@@ -27,6 +30,16 @@ public class ReviewService {
         Review review = new Review(reviewRequestDto, user, room); //username이랑 comment 있음
         reviewRepository.save(review);
         return new ReviewResponseDto(review);
+    }
+
+    public List<ReviewResponseDto> getReviewResponseDtoList(Room room){
+        List<Review> reviewList = reviewRepository.findByRoom(room);
+        List<ReviewResponseDto> reviewResponseDtoList = new ArrayList<>();
+
+        for (Review review : reviewList) {      //reviewList의 배열 수 만큼 반복!           Review가
+            reviewResponseDtoList.add(new ReviewResponseDto(review));
+        }
+        return reviewResponseDtoList;
     }
 
 
