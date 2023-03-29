@@ -24,7 +24,7 @@ public class DetailRoomService {
     @Transactional(readOnly = true)   // 숙소 상세정보 Page
     public RoomDetailListResponseDto getDetailRoom(Long roomId){
         Room room = getRoom(roomId);
-        List<Review> reviewList = reviewRepository.findByRoom(room);
+        List<Review> reviewList = reviewRepository.findByRoom(room);   //roomId가 같은 리뷰'들'을 리스트로 찾음
         List<ReviewResponseDto> reviewResponseDtoList = new ArrayList<>();
 
         for (Review review : reviewList) {      //reviewList의 배열 수 만큼 반복!           Review가
