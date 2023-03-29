@@ -24,16 +24,17 @@ public class BookmarkService {
         // 숙소 있는지 확인
         detailRoomService.getRoom(roomId);
 
-        // roomid와 user로 bookmark 이전에 했는지 확인
-//        Optional<Bookmark> bookmark = getBookmark(roomId, user);
+        // checkBookmark : roomid와 user로 bookmark 이전에 했는지 확인
         // 이전에 bookmark 안했으면 추가, 했으면 삭제
-        if (!checkBookmark(roomId, user)){
-            saveBookmark(roomId, user);
-            return "북마크 성공";
-        } else {
+        // if문 not(!)으로 시작하는거 지양
+        String result = "북마크 성공";
+        if (checkBookmark(roomId, user)){
             deleteBookmark(roomId, user);
-            return "북마크 취소";
+            result = "북마크 취소";
+        } else {
+            saveBookmark(roomId, user);
         }
+        return result;
     }
 
     //optional 안쓰는게 좋음 exist -> 근데 delete에서 써야함
