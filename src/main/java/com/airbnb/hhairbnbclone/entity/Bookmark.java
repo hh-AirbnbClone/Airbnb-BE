@@ -17,7 +17,7 @@ public class Bookmark {
     private Long roomId;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public Bookmark(Long roomId, User user) {

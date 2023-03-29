@@ -4,13 +4,8 @@ package com.airbnb.hhairbnbclone.entity;
 import com.airbnb.hhairbnbclone.room.dto.RoomRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -59,19 +54,4 @@ public class Room {
         this.host = requestDto.getHost();
     }
 
-
-//    @JoinColumn(name = "ROOM_ID")
-//    @OneToMany
-//    private List<Comment> commentList = new ArrayList<>();
-
-    public Room(Room room) {
-            this.title = room.getTitle();
-            this.description = room.getDescription();
-            this.price = room.getPrice();
-            this.address = room.getAddress();
-            this.imageList = room.getImageList();
-            this.maxGuest = room.getMaxGuest();
-//        this.commentList = room.getCommentList();
-
-        }
     }

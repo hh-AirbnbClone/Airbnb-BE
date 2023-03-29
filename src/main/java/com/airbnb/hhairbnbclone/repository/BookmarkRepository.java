@@ -4,9 +4,8 @@ import com.airbnb.hhairbnbclone.entity.Bookmark;
 import com.airbnb.hhairbnbclone.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-import java.util.Optional;
-
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
-    Optional<Bookmark> findByRoomIdAndUser(Long roomId, User user);
+//    Optional<Bookmark> findByRoomIdAndUser(Long roomId, User user);
+    void deleteByRoomIdAndUser(Long roomId, User user);
+    boolean existsByRoomIdAndUser(Long roomId, User user);
 }
