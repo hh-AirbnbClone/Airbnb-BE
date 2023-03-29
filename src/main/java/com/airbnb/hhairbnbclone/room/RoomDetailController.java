@@ -13,7 +13,7 @@ public class RoomDetailController {
     private final DetailRoomService detailRoomService;
 
     @GetMapping("/{Id}")
-    public ResponseEntity getDetailRoom(@PathVariable Long Id) throws Exception{
+    public ResponseEntity getDetailRoom(@PathVariable Long Id){
         return ResponseMessage.SuccessResponse("숙소 상세조회 성공", detailRoomService.getDetailRoom(Id));
     }
 
