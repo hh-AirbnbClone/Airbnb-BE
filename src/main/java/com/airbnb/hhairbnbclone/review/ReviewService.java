@@ -10,13 +10,12 @@ import com.airbnb.hhairbnbclone.repository.RoomRepository;
 import com.airbnb.hhairbnbclone.review.dto.ReviewRequestDto;
 import com.airbnb.hhairbnbclone.review.dto.ReviewResponseDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 
-@Slf4j
+
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
@@ -33,7 +32,7 @@ public class ReviewService {
 
     @Transactional
     public List<ReviewResponseDto> getReviewResponseDtoList(Room room){
-        return reviewRepository.findByRoom(room).stream().map(ReviewResponseDto::new).toList();
+        return reviewRepository.findByRoom(room).stream().map(ReviewResponseDto::new).toList();//
     }
 
 }
