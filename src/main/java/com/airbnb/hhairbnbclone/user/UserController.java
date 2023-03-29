@@ -29,7 +29,7 @@ public class UserController {
         // code: 카카오 서버로부터 받은 인가 코드
 
         Map<String, String> kakaoUser = userService.kakaoLogin(code, response);
-        String createToken =  jwtUtil.createToken(kakaoUser.get("kakaoId"), kakaoUser.get("nickname"));
+        String createToken =  jwtUtil.createToken(kakaoUser.get("kakaoId"), kakaoUser.get("nickname"), kakaoUser.get("profile"));
 
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, createToken);
 //
