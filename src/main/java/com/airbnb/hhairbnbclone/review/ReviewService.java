@@ -20,11 +20,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final DetailRoomService detailRoomService;
+
     @Transactional
     public ReviewResponseDto createReview(Long roomId, ReviewRequestDto reviewRequestDto, User user){
         Room room = detailRoomService.getRoom(roomId);
         Review review = new Review(reviewRequestDto, user, room); //username이랑 comment 있음
-        reviewRepository.saveAndFlush(review);
+        reviewRepository.save(review);
         return new ReviewResponseDto(review);
     }
+
+
+
+
 }

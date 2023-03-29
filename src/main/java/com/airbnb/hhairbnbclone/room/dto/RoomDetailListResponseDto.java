@@ -30,6 +30,7 @@ public class RoomDetailListResponseDto {
 
 
 
+
     public RoomDetailListResponseDto(Room room, List<ReviewResponseDto> reviewResponseDtoList, int reviewCount) {
         this.RoomId = room.getId();
         this.title = room.getTitle();
@@ -42,15 +43,8 @@ public class RoomDetailListResponseDto {
         this.reviewCount = reviewCount;
         this.reviewList = reviewResponseDtoList;
     }
-
 }
 
 
 
 
-
-
-
-//            ReviewResponseDto reviewResponseDto = new ReviewResponseDto();
-//            new ReviewResponseDto(review.getReview(), review.getUser(),review.getCreatedAt());
-//            ReviewResponseDto reviewOne = review.getReview();98%EA%B8%B0
