@@ -1,19 +1,11 @@
 package com.airbnb.hhairbnbclone.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-@Getter
 @Builder
-@AllArgsConstructor
-public class ResponseMessage {
-    private final String message;
-    private final int statusCode;
-    private final Object data;
-
+public record ResponseMessage(String message, int statusCode, Object data) {
     public static ResponseEntity ErrorResponse(CustomErrorCode errorCode) {
         return ResponseEntity
                 .status(errorCode.getHttpStatus())

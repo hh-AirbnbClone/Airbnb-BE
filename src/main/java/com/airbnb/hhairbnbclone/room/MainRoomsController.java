@@ -6,14 +6,12 @@ import com.airbnb.hhairbnbclone.room.dto.MainRoomsResponseDto;
 import com.airbnb.hhairbnbclone.room.dto.RoomRequestDto;
 import com.airbnb.hhairbnbclone.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.asm.Advice;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -33,19 +31,14 @@ public class MainRoomsController {
 
     // ResponseEntity로 수정
     @GetMapping("/rooms")
-    public List<MainRoomsResponseDto> getRooms(
+    public ResponseEntity getRooms(
             @RequestParam(required = false) String address,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkInDate,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkOutDate,
             @RequestParam(required = false) Integer guestNum
             ,@AuthenticationPrincipal UserDetailsImpl userDetails
     ){
-        if(userDetails == null){
-            return roomService.getMainRooms(address, checkInDate, checkOutDate, guestNum, null);
-        } else{
-            return roomService.getMainRooms(address, checkInDate, checkOutDate, guestNum, userDetails.getUser());
-        }
-
+        return ResponseMessage.SuccessResponse("조회 성공", roomService.getMainRooms(address, checkInDate, checkOutDate, guestNum, userDetails));
     }
 
     @PostMapping("/rooms/bookmark/{roomId}")

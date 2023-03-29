@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,14 +37,8 @@ public class ReservationService {
         }
 
         //예약하려는 날짜가 다른 예약과 겹치지 않는지 체크
-        List<Reservation> reservationList = reservationRepository.findAllByRoom(room);
-
-        if (reservationList.size() > 0) {
-            for (Reservation reservation : reservationList) {
-                if (!reservation.checkReservationDate(requestDto.getCheckInDate(), requestDto.getCheckOutDate())) {
-                    throw new CustomException(CustomErrorCode.DUPLICATE_RESERVATION_DATE);
-                }
-            }
+        if (isDuplicateReservation(room, requestDto.getCheckInDate(), requestDto.getCheckOutDate())) {
+            throw new CustomException(CustomErrorCode.DUPLICATE_RESERVATION_DATE);
         }
 
         reservationRepository.saveAndFlush(new Reservation(requestDto, user, room));
@@ -51,8 +46,23 @@ public class ReservationService {
         return "숙소예약 성공";
     }
 
+    //예약하려는 날짜가 다른 예약과 겹치면 true, 안 겹치면 false
+    @Transactional
+    public boolean isDuplicateReservation(Room room, LocalDate checkin, LocalDate checkout) {
+        boolean result = false;
+        List<Reservation> reservationList = reservationRepository.findAllByRoom(room);
+
+        for (Reservation reservation : reservationList) {
+            if (!reservation.checkReservationDate(checkin, checkout)) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
 
     // 체크인, 체크아웃 날짜 받아서 예약 불가능한 숙소 리스트 반환
+    @Transactional
     public List<Long> getNotReservableRoom(LocalDate checkIn, LocalDate checkOut) {
         List<Long> roomList = new ArrayList<>();
         List<Reservation> reservationList = reservationRepository.findAll();
@@ -65,27 +75,20 @@ public class ReservationService {
     }
 
     // 예약 가능한 가장 빠른 일주일 계산 메서드
-    public LocalDate getEarliestAvailableDate(Room room) {
+    @Transactional
+    public Map<String, LocalDate> getEarliestAvailableDate(Room room) {
         LocalDate currentDate = LocalDate.now();
-        LocalDate oneWeekLater = currentDate.plusWeeks(1);
-        LocalDate earliestDate = null;
-        List<Reservation> reservationList = reservationRepository.findAllByRoom(room);
-        while (earliestDate == null) {
-            boolean isAvailable = true;
-            for (Reservation reservation : reservationList) {
-                // checkReservationDate : 날짜 예약 가능하면 true, 예약 불가능한 날짜면 false
-                if (!reservation.checkReservationDate(currentDate, oneWeekLater)) {
-                    isAvailable = false;
-                    break;
-                }
+        Map<String, LocalDate> result = new HashMap<>();
+        while (true) {
+            LocalDate oneWeekLater = currentDate.plusWeeks(1);
+            if (!isDuplicateReservation(room, currentDate, oneWeekLater)) {
+                result.put("startDate", currentDate);
+                result.put("endDate", oneWeekLater);
+                break;
             }
-            if (isAvailable) {
-                earliestDate = currentDate;
-            } else {
-                currentDate = currentDate.plusDays(1);
-            }
+            currentDate = currentDate.plusDays(1);
         }
-        return earliestDate;
+        return result;
     }
 
 }
