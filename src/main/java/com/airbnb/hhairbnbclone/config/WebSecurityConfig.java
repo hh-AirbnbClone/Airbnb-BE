@@ -47,7 +47,7 @@ public class WebSecurityConfig {
 
         http.authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/rooms/**").permitAll()
+//                .antMatchers(HttpMethod.GET, "/rooms/**").permitAll()
                 .antMatchers("/swagger-ui/index.html").permitAll()
                 .anyRequest().authenticated()
                 //JWT 인증/인가를 사용하기 위한 설정
