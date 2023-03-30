@@ -53,7 +53,6 @@ public class ReservationService {
         for (Reservation reservation : reservationList) {
             if (!reservation.checkReservationDate(checkin, checkout)) {
                 result = true;
-                break;
             }
         }
         return result;

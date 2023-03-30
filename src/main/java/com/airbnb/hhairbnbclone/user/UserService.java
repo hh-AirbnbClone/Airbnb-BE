@@ -57,7 +57,7 @@ public class UserService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "658cf70d3e0e9690b7343f3d1f06ff3a");
-        body.add("redirect_uri", "http://localhost:3000/auth/login");
+        body.add("redirect_uri", "http://hh-airdnd.s3-website.ap-northeast-2.amazonaws.com/auth/login");
         body.add("code", code);
 
         // HTTP 요청 보내기
