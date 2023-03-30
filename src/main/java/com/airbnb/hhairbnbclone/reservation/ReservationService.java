@@ -6,10 +6,8 @@ import com.airbnb.hhairbnbclone.entity.User;
 import com.airbnb.hhairbnbclone.exception.CustomErrorCode;
 import com.airbnb.hhairbnbclone.exception.CustomException;
 import com.airbnb.hhairbnbclone.repository.ReservationRepository;
-import com.airbnb.hhairbnbclone.repository.RoomRepository;
 import com.airbnb.hhairbnbclone.reservation.dto.ReservationRequestDto;
 import com.airbnb.hhairbnbclone.room.DetailRoomService;
-import com.airbnb.hhairbnbclone.room.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +53,7 @@ public class ReservationService {
         for (Reservation reservation : reservationList) {
             if (!reservation.checkReservationDate(checkin, checkout)) {
                 result = true;
+                break;
             }
         }
         return result;

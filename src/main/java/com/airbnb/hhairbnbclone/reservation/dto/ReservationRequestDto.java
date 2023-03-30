@@ -10,11 +10,11 @@ import java.time.LocalDate;
 public class ReservationRequestDto {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    @DateTimeFormat(pattern="yyyyMMdd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate checkInDate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    @DateTimeFormat(pattern="yyyyMMdd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate checkOutDate;
     private int guestNum;
 }
